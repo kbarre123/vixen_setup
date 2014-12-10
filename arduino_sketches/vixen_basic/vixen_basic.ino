@@ -1,6 +1,6 @@
 /* 
 This sketch allows the Arduino to read 16 bytes of data from Vixen and turn on
-its pins accordingly, which in turn control a solid state relay hooked up to Xmas lights.
+its pins accordingly, which in turn controls a solid state relay hooked up to Xmas lights.
 */
 
 // Define pins on Arduino that will control the relay.
@@ -21,14 +21,14 @@ its pins accordingly, which in turn control a solid state relay hooked up to Xma
 #define CHANNEL_15 A3
 #define CHANNEL_16 A2
 
-// Define variable to hold # of channels
+// Define size of array to hold channels
 #define CHANNEL_COUNT 16
 
-// Define array to hold all channels
+// Define array to hold channels
 int channels[] = 
 {
-  CHANNEL_01, CHANNEL_02, CHANNEL_03, CHANNEL_04, CHANNEL_05, CHANNEL_06, CHANNEL_07,
-  CHANNEL_08, CHANNEL_09, CHANNEL_10, CHANNEL_11, CHANNEL_12, CHANNEL_13, CHANNEL_14, CHANNEL_15, CHANNEL_16
+  CHANNEL_01, CHANNEL_02, CHANNEL_03, CHANNEL_04, CHANNEL_05, CHANNEL_06, CHANNEL_07, CHANNEL_08, 
+  CHANNEL_09, CHANNEL_10, CHANNEL_11, CHANNEL_12, CHANNEL_13, CHANNEL_14, CHANNEL_15, CHANNEL_16
 };
 
 // Define array to hold incoming data stream from Vixen
@@ -51,15 +51,15 @@ void setup()
 
 void loop()
 {
-  // Read data from Vixen, store in array
   if (Serial.available() >= CHANNEL_COUNT)
   {
-    for (int i=0; i<CHANNEL_COUNT; i++)
+    // Read data from Vixen, store in array
+    for (int i = 0; i < CHANNEL_COUNT; i++)
     {
       incomingByte[i] = Serial.read();
     }                                  
-    // Write each byte of data from array to a pin on Arduino
-    for (int i=0; i<CHANNEL_COUNT; i++)
+    // Write data from array to a pin on Arduino
+    for (int i = 0; i < CHANNEL_COUNT; i++)
     {
       digitalWrite(channels[i], incomingByte[i]);
     }
