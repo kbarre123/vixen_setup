@@ -30,6 +30,7 @@ int channels[] =
 
 // Define number of channels.
 #define CHANNEL_COUNT 16
+#define RANDOM_COUNT 50
 
 void setup()
 {
@@ -42,6 +43,10 @@ void setup()
 void loop()
 {   
   testLights();
+  delay(300000); 	
+  doRandomLights(); 	
+  turnOffLights();
+  delay(5000);
 }
 
 //***************** DEFINE FUNCTIONS *****************
@@ -54,11 +59,30 @@ void testLights()
     digitalWrite(channels[i], HIGH);
     delay(10 );
   }
-  /*delay(120000);
-  for(int i = 0; i < CHANNEL_COUNT; i++)
-  {
-    digitalWrite(channels[i], LOW);
-    delay(25);
-  }*/
+}
+
+void doRandomLights() 	
+{ 	
+  for(int j = 0; j < RANDOM_COUNT; j++) 	
+  { 	
+    for(int i = 0; i < CHANNEL_COUNT; i++) 	
+    { 	
+      int randNumber = random(0, 255); 	
+      if(randNumber <= 128) 	
+        digitalWrite(channels[i], HIGH); 	
+      else 	
+        digitalWrite(channels[i], LOW); 	
+      delay(50); 	
+    } 	
+  } 	
+}
+	
+void turnOffLights() 	
+{ 	
+  for(int i = 0; i < CHANNEL_COUNT; i++) 	
+  { 	
+    digitalWrite(channels[i], LOW); 	
+    delay(100); 	
+  } 	
 }
 
